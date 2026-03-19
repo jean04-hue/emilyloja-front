@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Perfil</title>
+  <link rel="stylesheet" href="perfil.css">
+</head>
+<body>
+  <header class="top-bar">
+    <button class="voltar" onclick="window.history.back()">←</button>
+    <h1>Meu perfil</h1>
+  </header>
+
+  <section class="usuario-info">
+    <div class="avatar">NJ</div>
+    <div>
+      <h2 id="perfil-nome">Nome</h2>
+      <p id="perfil-email">email@email.com</p>
+    </div>
+  </section>
+
+  <section class="menu-lista">
+  <div class="menu-box">
+    <h3>Informações</h3>
+    <ul>
+      <li>
+        <a href="#" onclick="editarCampo('telefone')">
+          Telefone<br>
+          <span id="campo-telefone" class="info-valor">Não informado</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="editarCampo('endereco')">
+          Endereço<br>
+          <span id="campo-endereco" class="info-valor">Não informado</span>
+        </a>
+      </li>
+      <li><a href="#" onclick="abrirPix()">Forma de Pagamento</a></li>
+      <li><a href="#" onclick="editarCampo('email')">Alterar Email</a></li>
+      <li><a href="#" onclick="editarCampo('senha')">Alterar Senha</a></li>
+    </ul>
+  </div>
+
+
+<div id="modal-pix" class="modal" style="display: none;">
+  <div class="modal-content">
+    <h2>No momento, aceitamos apenas pagamentos via Pix.</h2>
+    <p>Chave Pix: <span id="pix-key">seu-email@exemplo.com</span></p>
+    <button id="copy-pix" onclick="copiarPix()">Copiar Chave Pix</button>
+    <button onclick="fecharModal()">Fechar</button>
+  </div>
+</div>
+
+
+    <div class="menu-box">
+      <h3>Conta</h3>
+      <ul>
+        <li><a href="#" onclick="sair()">Sair da conta</a></li>
+        <li><a href="#" onclick="cancelarConta()">Cancelar conta</a></li>
+      </ul>
+    </div>
+  </section>
+
+  
+  <script type="module" src="perfil.js"></script>
+  <script type="module" src="script.js"></script>
+  <script type="module" src="API-Cadastrar-Login.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produtos por Categoria</title>
+  <link rel="stylesheet" href="estilo.css" />
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmilyLoja - Moda Online</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .titulo {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .produtos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      background-color: white;
+    }
+
+    .card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    .preco {
+      color: #008cff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .btn-comprar {
+      padding: 8px 16px;
+      background-color: #008cff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-comprar:hover {
+      background-color: #0074cc;
+    }
+
+    .container {
+  margin-top: 70px;
+}
+
+  </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Emily<span>Loja</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Feminino</a>
+                    <!-- Submenu para "Feminino" -->
+                    <ul class="submenu">
+                        <li><a href="#" onclick="filtrarCategoria('vestidos')">Vestidos</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Blusas')">Blusas</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Calças')">Calças</a></li>
+                        <li><a href="#" onclick="filtarCategoria('Saia')">Saia</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Infantil</a>
+                  <!-- Submenu para "infantil" -->
+                    <ul class="submenu">
+                        <li><a href="#">6 a 12 meses</a></li>
+                        <li><a href="#">Coleção de animais</a></li>
+                        <li><a href="#">Conjuntos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Básicos</a>
+                   <!-- Submenu para "Básicos" -->
+                    <ul class="submenu">
+                        <li><a href="#">Camisetas de regata</a></li>
+                        <li><a href="#">Blusas de algodão</a></li>
+                        <li><a href="#">Calças de sarja</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Jeans</a>
+                   <!-- Submenu para "Jeans" -->
+                    <ul class="submenu">
+                        <li><a href="#">Skinny</a></li>
+                        <li><a href="#">Cargo</a></li>
+                        <li><a href="#">Larga</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Acessórios</a>
+                   <!-- Submenu para "Acessórios" -->
+                    <ul class="submenu">
+                        <li><a href="#">Bolsas de mão</a></li>
+                        <li><a href="#">Cintos de couro</a></li>
+                        <li><a href="#">Joias</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="icon-container">
+    <div class="icons">
+        <button class="search-button" id="openSearch">
+            <i class="fas fa-search"></i>
+        </button> 
+        <a href="#"><i class="far fa-heart"></i></a>
+        <a href="#" id="openModal"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a>
+    </div>
+
+    <!-- Botão para abrir o menu -->
+    <div class="menu-button" id="openSideMenu">
+        <i class="fas fa-bars"></i>
+        <span>Mais</span>
+    </div>
+</div>
+
+<!-- MENU LATERAL -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-menu-header">
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">NJ</div>
+<div>
+         <p class="user-name" id="userName">nei</p>
+         <a href="perfil.html">Meu perfil ></a>
+      </div>
+    </div>
+  </div>
+
+  <ul class="side-menu-list">
+    <li><i class="fas fa-bell"></i> Notificações</li>
+
+    <li onclick="window.location.href='ajuda.html'">
+  <i class="fas fa-headset"></i> Ajuda
+</li>
+
+    <li onclick="window.location.href='minhas-compras.html'">
+  <i class="fas fa-shopping-bag"></i> Minhas compras
+</li>
+
+    <li><i class="far fa-heart"></i> Favoritos</li>
+
+    <li onclick="window.location.href='conecte.htm'">
+  <i class="fas fa-share-alt"></i> Conecte-se a nós
+</li>
+
+    
+
+    <li id="btn-sair"><i class="fas fa-sign-out-alt"></i> Sair</li>
+  </ul>
+</div>
+
+
+
+
+     
+    </header>
+    <!-- Barra de pesquisa expandida (inicialmente oculta) -->
+    <header class="search-navbar" id="searchNavbar">
+        <div class="search-navbar-container">
+            <div class="search-navbar-content">
+                <button class="back-button" id="backButton">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="search-input-container">
+                    <input type="text" id="expandedSearch" placeholder="O que você está procurando?" onkeyup="showSuggestions()">
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+              <ul id="suggestions" class="suggestions-list"></ul>
+            </div>
+        </div>
+    </header>
+<body>
+  <div class="container">
+    <h1 class="titulo">Produtos da Categoria</h1>
+    <div class="produtos-grid" id="listaProdutos"></div>
+  </div>
+
+  <script>
+  const categoriaSelecionada = localStorage.getItem("categoriaSelecionada");
+  const todosProdutos = JSON.parse(localStorage.getItem("produtos")) || [];
+  const produtos = todosProdutos.filter(p => p.categoria === categoriaSelecionada);
+
+  const container = document.getElementById("listaProdutos");
+
+  if (produtos.length === 0) {
+    container.innerHTML = "<p>Nenhum produto encontrado para esta categoria.</p>";
+  } else {
+    produtos.forEach(prod => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${prod.imagem}" alt="${prod.nome}">
+        <h3>${prod.nome}</h3>
+        <p class="preco">R$ ${prod.preco.toFixed(2)}</p>
+        <button class="btn-comprar" onclick='abrirDetalhes(${JSON.stringify(prod)})'>Mais detalhes</button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function abrirDetalhes(produto) {
+    localStorage.setItem("produtoSelecionado", JSON.stringify(produto));
+    window.location.href = "detalhes-produto.html";
+  }
+</script>
+
+</body>
+</html>
+
+<script src="script.js"></script>
+
+<!-- Rodapé -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="social-media">
+             <h4>Nos siga nas redes sociais</h4>
+            <a href="https://facebook.com/seuperfil" traget="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://instagram.com/seuperfil" traget="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https:/wa.me/5511994557696" traget="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        
+        <div class="departments">
+            <h4>Departamentos</h4>
+            <ul>
+                <li><a href="#">Novidades</a></li>
+                <li><a href="#">Feminino</a></li>
+                <li><a href="#">Infantil</a></li>
+                <li><a href="#">Básicos</a></li>
+                <li><a href="#">Jeans</a></li>
+                <li><a href="#">Acessórios</a></li>
+            </ul>
+        </div>
+        
+        <div class="about-us">
+            <h4>Sobre nós</h4>
+            <ul>
+                <li><a href="#">Quem somos</a></li>
+                <li><a href="#">História</a></li>
+                <li><a href="#">Valores</a></li>
+            </ul>
+        </div>
+        
+        <div class="help">
+            <h4>Que ajuda?</h4>
+            <ul>
+                <li><a href="#">Central de ajuda</a></li>
+                <li><a href="#">Central de privacidade</a></li>
+                <li><a href="#">Trocas e devoluções</a></li>
+            </ul>
+        </div>
+        
+        <div class="payment-methods">
+            <h4>Formas de pagamento</h4>
+            <img src="https://placehold.co/150x30" alt="Formas de pagamento">
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="footer-info">
+            <p>CNPJ: 00.000.000/0000-00</p>
+            <p>R. SANTO INACÍO, 00,JARDIM TAMOIO, JUNDIAÍ - SP, CEP: 00000-000 - BRASIL</p>
+        </div>
+        <div class="footer-rights">
+            <p>© 2023. Todos os direitos reservados. EMILYLOJA.</p>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Administrativo - EmilyLoja</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #2e7d32;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      cursor: pointer;
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #2e7d32;
+      border-bottom: none;
+    }
+
+    .tab.active {
+      background-color: #2e7d32;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    form label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 4px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    form button {
+      margin-top: 15px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #256d28;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+      position: relative;
+    }
+
+    table th {
+      background-color: #2e7d32;
+      color: white;
+    }
+
+    .edit-btn {
+      display: none;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: #ccc;
+      border: none;
+      border-radius: 4px;
+      padding: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    td:hover .edit-btn {
+      display: inline-block;
+    }
+
+    .btn-exportar {
+      margin-top: 10px;
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" onclick="selecionarAba('cadastro')">Cadastrar Produto</div>
+      <div class="tab" onclick="selecionarAba('ver')">Ver Produtos</div>
+    </div>
+
+    <div id="cadastro" class="tab-content active">
+      <h2>Cadastrar Novo Produto</h2>
+      <form id="formCadastro">
+        <label for="nome">Nome do produto</label>
+        <input type="text" id="nome" required>
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" rows="3" required></textarea>
+
+        <label for="preco">Preço (R$)</label>
+        <input type="number" id="preco" required>
+
+        <label for="estoque">Estoque</label>
+        <input type="number" id="estoque" required>
+
+        <label for="categoria">Categoria</label>
+        <select id="categoria" required>
+          <option value="">Selecione a Categoria</option>
+          <option value="vestidos">Vestidos</option>
+          <option value="Blusas">Blusas</option>
+          <option value="camisetas">Camisetas</option>
+          <option value="Calças">Calças</option>
+          <option value="Acessorios">Acessórios</option>
+          <option value="Saia">Saia</option>
+        </select>
+
+        <label for="imagem">URL da Imagem</label>
+        <input type="url" id="imagem" required>
+
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+
+    <div id="ver" class="tab-content">
+      <h2>Produtos Cadastrados</h2>
+      <table id="tabelaProdutos">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+            <th>Categoria</th>
+            <th>Imagem</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button onclick="exportarParaExcel()" class="btn-exportar">📥 Exportar </button>
+    </div>
+  </div>
+
+  <script>
+    function selecionarAba(aba) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById(aba).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function carregarTabela() {
+      const tbody = document.querySelector("#tabelaProdutos tbody");
+      tbody.innerHTML = "";
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      produtos.forEach((p, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><span>${p.nome}</span><button class="edit-btn" onclick="editarCampo(this, ${index}, 'nome')">✎</button></td>
+          <td><span>${p.descricao}</span><button class="edit-btn" onclick="editarCampo(this, ${index}, 'descricao')">✎</button></td>
+          <td><span>R$ ${parseFloat(p.preco).toFixed(2)}</span><button class="edit-btn" onclick="editarCampo(this, ${index}, 'preco')">✎</button></td>
+          <td><span>${p.estoque}</span><button class="edit-btn" onclick="editarCampo(this, ${index}, 'estoque')">✎</button></td>
+          <td><span>${p.categoria}</span><button class="edit-btn" onclick="editarCampoCategoria(this, ${index})">✎</button></td>
+          <td><img src="${p.imagem}" width="50"></td>
+          <td><button onclick="excluirProduto(${index})">Excluir</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function editarCampo(button, index, campo) {
+      const span = button.parentElement.querySelector("span");
+      const valorAtual = span.textContent;
+      const input = document.createElement("input");
+      input.value = valorAtual;
+      input.onblur = () => salvarEdicao(index, campo, input.value);
+      button.parentElement.replaceChild(input, span);
+      input.focus();
+    }
+
+    function editarCampoCategoria(button, index) {
+      const span = button.parentElement.querySelector("span");
+      const select = document.createElement("select");
+      const opcoes = ["vestidos", "blusas", "camisetas", "calças", "Saia", "acessorios"];
+      opcoes.forEach(op => {
+        const option = document.createElement("option");
+        option.value = op;
+        option.textContent = op.charAt(0).toUpperCase() + op.slice(1);
+        if (op === span.textContent.toLowerCase()) option.selected = true;
+        select.appendChild(option);
+      });
+      select.onblur = () => salvarEdicao(index, 'categoria', select.value);
+      button.parentElement.replaceChild(select, span);
+      select.focus();
+    }
+
+    function salvarEdicao(index, campo, novoValor) {
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      produtos[index][campo] = campo === "preco" || campo === "estoque" ? Number(novoValor) : novoValor;
+      localStorage.setItem("produtos", JSON.stringify(produtos));
+      carregarTabela();
+    }
+
+    function excluirProduto(index) {
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      produtos.splice(index, 1);
+      localStorage.setItem("produtos", JSON.stringify(produtos));
+      carregarTabela();
+    }
+
+    function exportarParaExcel() {
+    const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+
+    if (produtos.length === 0) {
+      alert("Nenhum produto para exportar.");
+      return;
+    }
+
+    const dados = produtos.map(p => ({
+      Nome: p.nome,
+      Descrição: p.descricao,
+      Preço: p.preco,
+      Estoque: p.estoque,
+      Categoria: p.categoria,
+      Imagem: p.imagem
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dados);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Produtos");
+
+    XLSX.writeFile(workbook, "produtos.xlsx");
+  }
+
+    document.getElementById("formCadastro").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const produto = {
+        nome: document.getElementById("nome").value,
+        descricao: document.getElementById("descricao").value,
+        preco: parseFloat(document.getElementById("preco").value),
+        estoque: parseInt(document.getElementById("estoque").value),
+        categoria: document.getElementById("categoria").value,
+        imagem: document.getElementById("imagem").value
+      };
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      produtos.push(produto);
+      localStorage.setItem("produtos", JSON.stringify(produtos));
+      document.getElementById("formCadastro").reset();
+      alert("Produto cadastrado com sucesso!");
+      carregarTabela();
+    });
+
+    carregarTabela();
+  </script>
+</body>
+</html>

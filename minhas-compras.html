@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Compras - EmilyLoja</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+   <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.compras-lista {
+  list-style: none;
+  text-align: left;
+}
+
+.compras-lista li {
+  background: #f0f0f0;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+.compras-lista li strong {
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+.compras-lista li span {
+  font-size: 14px;
+  color: #555;
+}
+
+   </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Minhas Compras</h1>
+    <ul id="lista-compras" class="compras-lista"></ul>
+  </div>
+
+  <script src="compras.js"></script>
+</body>
+</html>

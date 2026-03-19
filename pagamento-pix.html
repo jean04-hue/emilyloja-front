@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pagamento via Pix</title>
+  <link rel="stylesheet" href="estilo.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .produto-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .produto-info img {
+      max-width: 150px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .formulario {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .formulario input,
+    .formulario textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .formulario button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .pix-area {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .pix-area p {
+      font-weight: bold;
+    }
+
+    .mensagem-final {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Finalizar Compra com Pix</h1>
+
+  <div class="produto-info" id="resumoProduto"></div>
+
+  <form class="formulario" id="formPagamento">
+    <label for="nome">Nome completo</label>
+    <input type="text" id="nome" required>
+
+    <label for="telefone">Telefone</label>
+    <input type="text" id="telefone" required>
+
+    <label for="endereco">Endereço de entrega</label>
+    <textarea id="endereco" rows="3" required></textarea>
+
+    <div class="pix-area">
+      <p>Chave Pix: <span id="pix-key">seu-email@exemplo.com</span></p>
+      <button type="button" id="copy-pix" onclick="copiarPix()">Copiar Chave Pix</button>
+    </div>
+
+    <button type="submit">Finalizar Pedido</button>
+  </form>
+
+  <div class="mensagem-final" id="mensagemFinal"></div>
+
+  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Inicializa com sua chave pública correta
+    (function(){
+      emailjs.init("tIT2mQ9UKwu97wyfz");
+    })();
+  </script>
+
+  <script>
+    const produtoSelecionado = JSON.parse(localStorage.getItem("produtoSelecionado"));
+
+    if (!produtoSelecionado) {
+      document.getElementById("resumoProduto").innerHTML = "<p>Produto não encontrado.</p>";
+      document.getElementById("formPagamento").style.display = "none";
+    } else {
+      document.getElementById("resumoProduto").innerHTML = `
+        <img src="${produtoSelecionado.imagem}" alt="Imagem do produto">
+        <div>
+          <h2>${produtoSelecionado.nome}</h2>
+          <p><strong>Preço:</strong> R$ ${produtoSelecionado.preco.toFixed(2)}</p>
+          <p><strong>Estoque restante:</strong> ${produtoSelecionado.estoque}</p>
+        </div>
+      `;
+    }
+
+    document.getElementById("formPagamento").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById("nome").value.trim();
+      const telefone = document.getElementById("telefone").value.trim();
+      const endereco = document.getElementById("endereco").value.trim();
+
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+      const email = usuario?.email || "sem-email@teste.com";
+
+      if (!nome || !telefone || !endereco) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      const templateParams = {
+        nome: nome,
+        telefone: telefone,
+        endereco: endereco,
+        produto: produtoSelecionado.nome,
+        preco: produtoSelecionado.preco,
+        email: email
+      };
+
+      console.log("Enviando e-mail com dados:", templateParams);
+
+      emailjs.send("service_twwalnj", "__ejstest-mail-service__", templateParams)
+        .then(function(response) {
+          document.getElementById("mensagemFinal").textContent =
+            "Pedido finalizado! Verifique seu e-mail para confirmação.";
+          console.log("E-mail enviado!", response.status, response.text);
+        }, function(error) {
+          alert("Erro ao enviar o e-mail.");
+          console.log("Erro:", error);
+        });
+    });
+
+    function copiarPix() {
+      const chavePix = document.getElementById("pix-key").textContent;
+      navigator.clipboard.writeText(chavePix).then(() => {
+        alert("Chave Pix copiada com sucesso!");
+      }).catch(() => {
+        alert("Erro ao copiar a chave Pix.");
+      });
+    }
+  </script>
+
+</body>
+</html>

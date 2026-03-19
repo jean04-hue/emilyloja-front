@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ajuda - EmilyLoja</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      padding: 30px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #222;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .faq-section h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .faq-item {
+      border-radius: 14px;
+      background: #f1f1f1;
+      margin-bottom: 15px;
+      transition: box-shadow 0.3s ease;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+
+    .faq-question {
+      padding: 16px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: #fff;
+      padding: 0 20px;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding: 12px 20px 16px;
+    }
+
+    .contato-section h2 {
+      font-size: 20px;
+      margin: 40px 0 20px;
+      color: #333;
+    }
+
+    .whatsapp-links a {
+      display: inline-block;
+      margin: 10px 10px 0 0;
+      text-decoration: none;
+      background: #25d366;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .whatsapp-links a:hover {
+      background: #1ebc59;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .faq-question {
+        font-size: 15px;
+      }
+
+      .faq-answer {
+        font-size: 14px;
+      }
+
+      .whatsapp-links a {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+    }
+  </style>
+  </head>
+  <body>
+      <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Emily<span>Loja</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Feminino</a>
+                    <!-- Submenu para "Feminino" -->
+                    <ul class="submenu">
+                        <li><a href="#" onclick="filtrarCategoria('vestidos')">Vestidos</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Blusas')">Blusas</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Calças')">Calças</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Saia')">Saia</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Infantil</a>
+                  <!-- Submenu para "infantil" -->
+                    <ul class="submenu">
+                        <li><a href="#" onclick="filtrarCategoria('6 a 12 meses')">6 a 12 meses</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Coleção de animais')">Coleção de animais</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Conjuntos')">Conjuntos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Básicos</a>
+                   <!-- Submenu para "Básicos" -->
+                    <ul class="submenu">
+                        <li><a href="#" onclick="filtrarCategoria('Camisetas de regata')">Camisetas de regata</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Blusas de algodão')">Blusas de algodão</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Calças de sarja')">Calças de sarja</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Jeans</a>
+                   <!-- Submenu para "Jeans" -->
+                    <ul class="submenu">
+                      <li><a href="#" onclick="filtrarCategoria('Skinny')">Skinny</a></li>
+                       <li><a href="#" onclick="filtrarCategoria('Cargo')">Cargo</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Larga')">Larga</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Acessórios</a>
+                   <!-- Submenu para "Acessórios" -->
+                    <ul class="submenu">
+                       <li><a href="#" onclick="filtrarCategoria('Bolsa de mão')">Bolsa de mão</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Cintos de couro')">Cintos de couro</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Joias')">Joias</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="icon-container">
+    <div class="icons">
+        <button class="search-button" id="openSearch">
+            <i class="fas fa-search"></i>
+        </button> 
+        <a href="#"><i class="far fa-heart"></i></a>
+        <a href="#" id="openModal"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a>
+    </div>
+
+    <!-- Botão para abrir o menu -->
+    <div class="menu-button" id="openSideMenu">
+        <i class="fas fa-bars"></i>
+        <span>Mais</span>
+    </div>
+</div>
+
+<!-- MENU LATERAL -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-menu-header">
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">NJ</div>
+<div>
+         <p class="user-name" id="userName">nei</p>
+         <a href="perfil.html">Meu perfil ></a>
+      </div>
+    </div>
+  </div>
+
+  <ul class="side-menu-list">
+    <li><i class="fas fa-bell"></i> Notificações</li>
+
+    <li onclick="window.location.href='ajuda.html'">
+  <i class="fas fa-headset"></i> Ajuda
+</li>
+
+    <li onclick="window.location.href='minhas-compras.html'">
+  <i class="fas fa-shopping-bag"></i> Minhas compras
+</li>
+
+    <li><i class="far fa-heart"></i> Favoritos</li>
+
+    <li onclick="window.location.href='conecte.htm'">
+  <i class="fas fa-share-alt"></i> Conecte-se a nós
+</li>
+
+    
+
+    <li id="btn-sair"><i class="fas fa-sign-out-alt"></i> Sair</li>
+  </ul>
+</div>
+
+
+
+
+     
+    </header>
+    <!-- Barra de pesquisa expandida (inicialmente oculta) -->
+    <header class="search-navbar" id="searchNavbar">
+        <div class="search-navbar-container">
+            <div class="search-navbar-content">
+                <button class="back-button" id="backButton">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="search-input-container">
+                    <input type="text" id="expandedSearch" placeholder="O que você está procurando?" onkeyup="showSuggestions()">
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+              <ul id="suggestions" class="suggestions-list"></ul>
+            </div>
+        </div>
+    </header>
+<body>
+  <h1>Central de Ajuda</h1>
+
+  <div class="container">
+    <section class="faq-section">
+      <h2>Perguntas Frequentes</h2>
+
+      <div class="faq-item">
+        <div class="faq-question">🛍️ Como faço para comprar? <span>+</span></div>
+        <div class="faq-answer">Você pode navegar pelas categorias, escolher o produto desejado e clicar em “Adicionar ao carrinho”. Em seguida, finalize sua compra na página do carrinho.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">🚚 Como acompanho meu pedido? <span>+</span></div>
+        <div class="faq-answer">Vá até “Minhas Compras” no menu. Lá você verá o status e rastreamento do seu pedido.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">↩️ Como faço uma troca ou devolução? <span>+</span></div>
+        <div class="faq-answer">Entre em contato com nosso suporte via WhatsApp e informe o número do pedido e motivo da troca.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">💳 Quais formas de pagamento são aceitas? <span>+</span></div>
+        <div class="faq-answer">Aceitamos cartões de crédito, débito, Pix e boletos bancários.</div>
+      </div>
+    </section>
+
+    <section class="contato-section">
+  <h2>Precisa de mais ajuda?</h2>
+  <p style="margin-bottom: 20px; color: #555;">Fale diretamente conosco pelo WhatsApp:</p>
+  <a href="https://wa.me/5511994557696" class="whatsapp-btn" target="_blank">
+    <span class="whatsapp-icon">💬</span> WhatsApp Atendimento
+  </a>
+</section>
+
+  </div>
+
+  <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('active');
+
+        // Alterna ícone + ou -
+        const icon = item.querySelector('span');
+        icon.textContent = item.classList.contains('active') ? '−' : '+';
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fale Conosco - EmilyLoja</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      padding: 50px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #222;
+      font-size: 24px;
+    }
+    p {
+      color: #555;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    .whatsapp-btn {
+      display: inline-block;
+      background: #25d366;
+      color: white;
+      padding: 14px 25px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    .whatsapp-btn:hover {
+      background: #1ebc59;}
+    .whatsapp-icon {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+  </style> 
+  
+  <script src="script.js"></script>
+
+  <!-- Rodapé -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="social-media">
+             <h4>Nos siga nas redes sociais</h4>
+            <a href="https://facebook.com/seuperfil" traget="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://instagram.com/seuperfil" traget="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https:/wa.me/5511994557696" traget="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        
+        <div class="departments">
+            <h4>Departamentos</h4>
+            <ul>
+                <li><a href="#">Novidades</a></li>
+                <li><a href="#">Feminino</a></li>
+                <li><a href="#">Infantil</a></li>
+                <li><a href="#">Básicos</a></li>
+                <li><a href="#">Jeans</a></li>
+                <li><a href="#">Acessórios</a></li>
+            </ul>
+        </div>
+        
+        <div class="about-us">
+            <h4>Sobre nós</h4>
+            <ul>
+                <li><a href="#">Quem somos</a></li>
+                <li><a href="#">História</a></li>
+                <li><a href="#">Valores</a></li>
+            </ul>
+        </div>
+        
+        <div class="help">
+            <h4>Que ajuda?</h4>
+            <ul>
+                <li><a href="#">Central de ajuda</a></li>
+                <li><a href="#">Central de privacidade</a></li>
+                <li><a href="#">Trocas e devoluções</a></li>
+            </ul>
+        </div>
+        
+        <div class="payment-methods">
+            <h4>Formas de pagamento</h4>
+            <img src="https://placehold.co/150x30" alt="Formas de pagamento">
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="footer-info">
+            <p>CNPJ: 00.000.000/0000-00</p>
+            <p>R. SANTO INACÍO, 00,JARDIM TAMOIO, JUNDIAÍ - SP, CEP: 00000-000 - BRASIL</p>
+        </div>
+        <div class="footer-rights">
+            <p>© 2023. Todos os direitos reservados. EMILYLOJA.</p>
+        </div>
+    </div>
+</footer>

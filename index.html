@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmilyLoja - Moda Online</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Emily<span>Loja</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Feminino</a>
+                    <!-- Submenu para "Feminino" -->
+                    <ul class="submenu">
+                        <li><a href="#">Vestidos</a></li>
+                        <li><a href="#">Blusas</a></li>
+                        <li><a href="#">Calças</a></li>
+                        <li><a href="#">Saia</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Infantil</a>
+                  <!-- Submenu para "infantil" -->
+                    <ul class="submenu">
+                        <li><a href="#">6 a 12 meses</a></li>
+                        <li><a href="#">Coleção de animais</a></li>
+                        <li><a href="#">Conjuntos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Básicos</a>
+                   <!-- Submenu para "Básicos" -->
+                    <ul class="submenu">
+                        <li><a href="#">Camisetas de regata</a></li>
+                        <li><a href="#">Blusas de algodão</a></li>
+                        <li><a href="#">Calças de sarja</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Jeans</a>
+                   <!-- Submenu para "Jeans" -->
+                    <ul class="submenu">
+                        <li><a href="#">Skinny</a></li>
+                        <li><a href="#">Cargo</a></li>
+                        <li><a href="#">Larga</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Acessórios</a>
+                   <!-- Submenu para "Acessórios" -->
+                    <ul class="submenu">
+                        <li><a href="#">Bolsas de mão</a></li>
+                        <li><a href="#">Cintos de couro</a></li>
+                        <li><a href="#">Joias</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="icons">
+            <div class="icons">
+                <button class="search-button" id="openSearch">
+          <i class="fas fa-search"></i>
+      </button>  
+            <a href="#" id="openUserModal"><i class="far fa-user"></i></a>
+            <a href="#"><i class="far fa-heart"></i></a>
+            <a href="#" id="openModal"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a>
+        </div>
+    </header>
+
+     <!-- Barra de pesquisa expandida (inicialmente oculta) -->
+     <header class="search-navbar" id="searchNavbar">
+        <div class="search-navbar-container">
+            <div class="search-navbar-content">
+                <button class="back-button" id="backButton">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="search-input-container">
+                    <input type="text" id="expandedSearch" placeholder="O que você está procurando?" onkeyup="showSuggestions()">
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+              <ul id="suggestions" class="suggestions-list"></ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="banner">
+        <button class="prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+        <div class="slides">
+            <div class="slide active">
+                <h1>PLUS SIZES</h1>
+                <img src="https://placehold.co/800x400" alt="Banner de moda">
+                <button class="check-btn">Conferir</button>
+            </div>
+            <div class="slide">
+                <h1>OUTRO LOOK</h1>
+                <img src="https://placehold.co/800x400" alt="Outro Banner">
+                <button class="check-btn">Conferir</button>
+            </div>
+            <div class="slide">
+                <h1>MAIS OPÇÕES</h1>
+                <img src="https://placehold.co/800x400" alt="Mais Opções">
+                <button class="check-btn">Conferir</button>
+            </div>
+        </div>
+        <button class="next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+        <div class="dots">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+        </div>
+    </section>
+
+    <!-- Benefícios -->
+    <div class="benefits">
+        <p><i class="fas fa-truck"></i> Você ganha <strong>frete grátis</strong> a partir de R$279 <a href="#">*consulte condições</a></p>
+    </div>
+
+    <!-- Categorias -->
+    <section class="categories">
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Carnaval">
+            <p>Igreja</p>
+        </div>
+        <div class="category active">
+            <img src="https://placehold.co/80" alt="Novidades">
+            <p>Novidades</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Feminino">
+            <p>Feminino</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Básicos">
+            <p>Básicos</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Masculino">
+            <p>Infantil</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Jeans">
+            <p>Jeans</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Acessórios">
+            <p>Acessórios</p>
+        </div>
+    </section>
+
+   <div class="menu">
+    <button class="menu-button" id="btn-masculino" onclick="showMasculino()">Feminino</button>
+    <button class="menu-button" id="btn-feminino" onclick="showFeminino()">Masculino</button>
+</div>
+
+<!-- Carrossel Masculino -->
+<div class="carousel-container" id="carousel-masculino">
+    <!-- Botão Esquerda -->
+    <button class="carousel-btn prev-btn" onclick="moveCarousel(-1)">&#10094;</button>
+
+    <div class="carousel">
+        <div class="card">
+            <img src="https://placehold.co/250x350?text=Feminino1" alt="Imagem feminino 1">
+            <h3>Feminino</h3>
+        </div>
+        <div class="card">
+            <img src="https://placehold.co/250x350?text=Feminino2" alt="Imagem feminino 2">
+            <h3>Feminino 2</h3>
+        </div>
+        <div class="card">
+            <img src="https://placehold.co/250x350?text=Feminino3" alt="Imagem feminino 3">
+            <h3>Feminino 3</h3>
+        </div>
+      <div class="card">
+            <img src="https://placehold.co/250x350?text=Feminino4" alt="Imagem feminino 4">
+            <h3>Feminino 4</h3>
+        </div>
+      <div class="card">
+            <img src="https://placehold.co/250x350?text=Masculino5" alt="Imagem feminino 5">
+            <h3>Feminino 5</h3>
+        </div>
+      <div class="card">
+            <img src="https://placehold.co/250x350?text=Masculino6" alt="Imagem feminino 6">
+            <h3>Feminino 6</h3>
+        </div>
+      <div class="card">
+            <img src="https://placehold.co/250x350?text=Feminino7" alt="Imagem feminino 7">
+            <h3>Feminino 7</h3>
+        </div>
+    </div>
+
+    <!-- Botão Direita -->
+    <button class="carousel-btn next-btn" onclick="moveCarousel(1)">&#10095;</button>
+</div>
+
+<!-- Carrossel Feminino -->
+<div class="carousel-container hidden" id="carousel-feminino">
+  <!-- Botão Esquerda -->
+<button class="carousel-btn prev-btn" onclick="moveCarouselFeminino(-1)">&#10094;</button>
+    <div class="carousel">
+        <div class="card">
+            <img src="https://placehold.co/250x350?text=Masculino1" alt="Imagem Masculino 1">
+            <h3>Feminino 1</h3>
+        </div>
+        <div class="card">
+            <img src="https://placehold.co/250x350?text=Masculino2" alt="Imagem Masculino 2">
+            <h3>Feminino 2</h3>
+        </div>
+        <div class="card">
+            <img src="https://placehold.co/250x350?text=Masculino3" alt="Imagem Masculino 3">
+            <h3>Feminino 3</h3>
+        </div>
+      <div class="card">
+            <img src="https://placehold.co/250x350?text=Masculino4" alt="Imagem Masculino 4">
+            <h3>Feminino 4</h3>
+        </div>
+      <div class="card">
+            <img src="https://placehold.co/250x350?text=Masculino5" alt="Imagem Masculino 5">
+            <h3>Feminino 5</h3>
+        </div>
+    </div>
+  <!-- Botão Direita -->
+    <button class="carousel-btn next-btn" onclick="moveCarouselFeminino(1)">&#10095;</button>
+</div>
+
+
+    <!-- Modal Carrinho -->
+    <div id="cartModal" class="modal-carrinho hidden">
+        <div class="modal-content">
+            <!-- Cabeçalho -->
+            <div class="modal-header">
+                <h2 class="text-lg font-bold">CARRINHO</h2>
+                <button id="closeModal" class="close-btn">&times;</button>
+            </div>
+
+            <!-- Barra de progresso -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" style="width: 20%;"></div>
+                </div>
+                <p class="progress-text">Faltam R$ 349,00 pra ganhar Frete Grátis</p>
+            </div>
+
+            <!-- Mensagem do carrinho vazio -->
+            <p class="cart-message">O seu carrinho ainda está vazio.<br> Aceita algumas sugestões?</p>
+
+            <!-- Botões de sugestão -->
+            <div class="suggestions">
+                <button class="suggestion-btn">MASCULINO</button>
+                <button class="suggestion-btn">FEMININO</button>
+                <button class="suggestion-btn">KITS</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+  
+  <!-- Modal Cadastro/Login -->
+<div id="userModal" class="modal-cadastro hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Cadastro</h2>
+      <button id="closeUserModal" class="close-btn">&times;</button>
+    </div>
+
+    <!-- Alternar entre Cadastro e Login -->
+    <div style="text-align: center; margin-bottom: 20px;">
+      <button id="btnCadastro" class="toggle-btn active">Cadastrar</button>
+      <button id="btnLogin" class="toggle-btn">Login</button>
+    </div>
+
+    <!-- Formulário de Cadastro -->
+    <form id="formCadastro" class="form-user">
+      <input type="text" id="cadNome" name="nome" placeholder="Nome" required>
+      <input type="email" id="cadEmail" name="email" placeholder="E-mail" required>
+      <input type="password" id="cadSenha" name="senha" placeholder="Senha" required>
+      <button type="submit" class="submit-btn">Continuar</button>
+    </form>
+
+    <!-- Formulário de Login -->
+    <form id="formLogin" class="form-user hidden">
+      <input type="email" id="loginEmail" name="email" placeholder="E-mail" required>
+      <input type="password" id="loginSenha" name="senha" placeholder="Senha" required>
+      <button type="submit" class="submit-btn">Entrar</button>
+    </form>
+  </div>
+</div>
+
+
+<script type="module" src="script.js"></script>
+<script type="module" src="API-Cadastrar-Login.js"></script>
+
+
+
+
+</body>
+</html>
+
+<!-- Rodapé -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="social-media">
+            <h4>Nos siga nas redes sociais</h4>
+            <a href="https://facebook.com/seuperfil" traget="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://instagram.com/seuperfil" traget="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https:/wa.me/5511994557696" traget="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    
+        <div class="departments">
+            <h4>Departamentos</h4>
+            <ul>
+                <li><a href="#">Novidades</a></li>
+                <li><a href="#">Feminino</a></li>
+                <li><a href="#">Infantil</a></li>
+                <li><a href="#">Básicos</a></li>
+                <li><a href="#">Jeans</a></li>
+                <li><a href="#">Acessórios</a></li>
+            </ul>
+        </div>
+        
+        <div class="about-us">
+            <h4>Sobre nós</h4>
+            <ul>
+                <li><a href="#">Quem somos</a></li>
+                <li><a href="#">História</a></li>
+                <li><a href="#">Valores</a></li>
+            </ul>
+        </div>
+        
+        <div class="help">
+            <h4>Que ajuda?</h4>
+            <ul>
+                <li><a href="#">Central de ajuda</a></li>
+                <li><a href="#">Central de privacidade</a></li>
+                <li><a href="#">Trocas e devoluções</a></li>
+            </ul>
+        </div>
+        
+        <div class="payment-methods">
+            <h4>Formas de pagamento</h4>
+            <img src="https://placehold.co/150x30" alt="Formas de pagamento">
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="footer-info">
+            <p>CNPJ: 00.000.000/0000-00</p>
+            <p>R. SANTO INACÍO, 00,JARDIM TAMOIO, JUNDIAÍ - SP, CEP: 00000-000 - BRASIL</p>
+        </div>
+        <div class="footer-rights">
+            <p>© 2023. Todos os direitos reservados. EMILYLOJA.</p>
+        </div>
+    </div>
+</footer>

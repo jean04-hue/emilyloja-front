@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmilyLoja - Moda Online</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Emily<span>Loja</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Feminino</a>
+                    <!-- Submenu para "Feminino" -->
+                    <ul class="submenu">
+                        <li><a href="#" onclick="filtrarCategoria('vestidos')">Vestidos</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Blusas')">Blusas</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Calças')">Calças</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Saia')">Saia</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Infantil</a>
+                  <!-- Submenu para "infantil" -->
+                    <ul class="submenu">
+                        <li><a href="#" onclick="filtrarCategoria('6 a 12 meses')">6 a 12 meses</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Coleção de animais')">Coleção de animais</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Conjuntos')">Conjuntos</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Básicos</a>
+                   <!-- Submenu para "Básicos" -->
+                    <ul class="submenu">
+                        <li><a href="#" onclick="filtrarCategoria('Camisetas de regata')">Camisetas de regata</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Blusas de algodão')">Blusas de algodão</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Calças de sarja')">Calças de sarja</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Jeans</a>
+                   <!-- Submenu para "Jeans" -->
+                    <ul class="submenu">
+                      <li><a href="#" onclick="filtrarCategoria('Skinny')">Skinny</a></li>
+                       <li><a href="#" onclick="filtrarCategoria('Cargo')">Cargo</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Larga')">Larga</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Acessórios</a>
+                   <!-- Submenu para "Acessórios" -->
+                    <ul class="submenu">
+                       <li><a href="#" onclick="filtrarCategoria('Bolsa de mão')">Bolsa de mão</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Cintos de couro')">Cintos de couro</a></li>
+                        <li><a href="#" onclick="filtrarCategoria('Joias')">Joias</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="icon-container">
+    <div class="icons">
+        <button class="search-button" id="openSearch">
+            <i class="fas fa-search"></i>
+        </button> 
+        <a href="#"><i class="far fa-heart"></i></a>
+        <a href="#" id="openModal"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a>
+    </div>
+
+    <!-- Botão para abrir o menu -->
+    <div class="menu-button" id="openSideMenu">
+        <i class="fas fa-bars"></i>
+        <span>Mais</span>
+    </div>
+</div>
+
+<!-- MENU LATERAL -->
+<div class="side-menu" id="sideMenu">
+  <div class="side-menu-header">
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">?</div>
+<div>
+         <p class="user-name" id="userName">convidado</p>
+         <a href="perfil.html">Meu perfil ></a>
+      </div>
+    </div>
+  </div>
+
+  <ul class="side-menu-list">
+    <li><i class="fas fa-bell"></i> Notificações</li>
+
+    <li onclick="window.location.href='ajuda.html'">
+  <i class="fas fa-headset"></i> Ajuda
+</li>
+
+    <li onclick="window.location.href='minhas-compras.html'">
+  <i class="fas fa-shopping-bag"></i> Minhas compras
+</li>
+
+    <li><i class="far fa-heart"></i> Favoritos</li>
+
+    <li onclick="openPopup()">
+  <i class="fas fa-share-alt"></i> Conecte-se a nós
+</li>
+
+<div class="popup" id="popup">  
+        <div class="container">
+            <h1>Conecte-se a nós</h1>
+            <p>Siga a EmilyLoja nas redes sociais:</p>
+            <div class="social-icons">
+                <a href="https://instagram.com/seuperfil" target="_blank" class="fab fa-instagram"></a>
+                <a href="https://facebook.com/seuperfil" target="_blank" class="fab fa-facebook-f"></a>
+                <a href="https://tiktok.com/@seuperfil" target="_blank" class="fab fa-tiktok"></a>
+            </div>
+            <div class="close-btn" onclick="closePopup()">Fechar</div>
+        </div>
+    </div>
+
+    <script>
+        function openPopup() {
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+
+    
+
+    <li id="btn-sair"><i class="fas fa-sign-out-alt"></i> Sair</li>
+  </ul>
+  
+</div>
+
+
+
+
+     
+    </header>
+    <!-- Barra de pesquisa expandida (inicialmente oculta) -->
+    <header class="search-navbar" id="searchNavbar">
+        <div class="search-navbar-container">
+            <div class="search-navbar-content">
+                <button class="back-button" id="backButton">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="search-input-container">
+                    <input type="text" id="expandedSearch" placeholder="O que você está procurando?" onkeyup="showSuggestions()">
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+              <ul id="suggestions" class="suggestions-list"></ul>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Banner Principal -->
+    <section class="banner">
+        <button class="prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+        <div class="slides">
+            <div class="slide active">
+                <h1>PLUS SIZES</h1>
+                <img src="https://placehold.co/800x400" alt="Banner de moda">
+                <button class="check-btn">Conferir</button>
+            </div>
+            <div class="slide">
+                <h1>OUTRO LOOK</h1>
+                <img src="https://placehold.co/800x400" alt="Outro Banner">
+                <button class="check-btn">Conferir</button>
+            </div>
+            <div class="slide">
+                <h1>MAIS OPÇÕES</h1>
+                <img src="https://placehold.co/800x400" alt="Mais Opções">
+                <button class="check-btn">Conferir</button>
+            </div>
+        </div>
+        <button class="next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+        <div class="dots">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+        </div>
+    </section>
+
+    <!-- Benefícios -->
+    <div class="benefits">
+        <p><i class="fas fa-truck"></i> Você ganha <strong>frete grátis</strong> a partir de R$279 <a href="#">*consulte condições</a></p>
+    </div>
+
+    <!-- Categorias -->
+    <section class="categories">
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Carnaval">
+            <p>Igreja</p>
+        </div>
+        <div class="category active">
+            <img src="https://placehold.co/80" alt="Novidades">
+            <p>Novidades</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Feminino">
+            <p>Feminino</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Básicos">
+            <p>Básicos</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Masculino">
+            <p>Infantil</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Jeans">
+            <p>Jeans</p>
+        </div>
+        <div class="category">
+            <img src="https://placehold.co/80" alt="Acessórios">
+            <p>Acessórios</p>
+        </div>
+    </section>
+
+   <div class="menu">
+  <button class="menu-button" id="btn-masculino" onclick="showMasculino()">Feminino</button>
+  <button class="menu-button" id="btn-feminino" onclick="showFeminino()">Masculino</button>
+</div>
+
+<!-- Carrossel Masculino -->
+<div class="carousel-container" id="carousel-masculino">
+  <!-- Botão Esquerda -->
+  <button class="carousel-btn prev-btn" onclick="moveCarousel(-1)">&#10094;</button>
+
+  <div class="carousel">
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="imagem-container">
+        <img src="https://placehold.co/250x350?text=Feminino1" alt="Imagem feminino 1"
+        onclick="abrirdetalheproduto({
+          nome: 'Camiseta Polo Game Changer',
+          preco: 209,
+          imagem: 'https://placehold.co/250x350?text=Feminino1',
+          descricao: 'Camiseta de algodão confortável e estilosa.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer;"
+        >
+        
+        <div class="overlay-compra" onclick="comprarapida({
+          nome: 'camiseta Polo Game Changer',
+          preco: 209,
+          imagem: 'https://placehold.co/250x350?text=Feminino1',
+  descricao: 'Camiseta de algodão confortável e estilosa.',
+  cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c'],
+  estoque: 5 
+        })">Compra rápida</div>
+        </div>
+  
+
+
+      <div class="info-produto">
+        <h3 class="nome-produto" onclick="abrirdetalheproduto({
+          nome: 'Camiseta Polo Game Changer',
+          preco: 209,
+          imagem: 'https://placehold.co/250x350?text=Feminino1',
+          descricao: 'Camiseta de algodão confortável e estilosa.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer; color: #000; text-decoration: underline;"
+      >
+        Camiseta Polo Game Changer
+      </h3>
+        <div class="precos">
+          <span class="preco-antigo">R$ 279</span>
+          <span class="preco-atual">R$ 209</span>
+        </div>
+        <p class="categoria">Cores disponíveis</p>
+        <div class="cores">
+          <span class="cor" style="background:#2f2a2b;"></span>
+          <span class="cor" style="background:#bfc0c1;"></span>
+          <span class="cor" style="background:#1d1f22;"></span>
+          <span class="cor" style="background:#00332e;"></span>
+          <span class="cor" style="background:#6e7c7c;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 (repetição para exemplo) -->
+     <div class="card">
+      <div class="imagem-container">
+        <img src="https://placehold.co/250x350?text=Feminino2" alt="Imagem feminino 2"
+        onclick="abrirdetalheproduto({
+          nome: 'Camiseta blabla',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino2',
+          descricao: 'Camiseta de blabla.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer;"
+        >
+        
+        <div class="overlay-compra">Compra rápida</div>
+      </div>
+      <div class="info-produto">
+        <h3 class="nome-produto" onclick="abrirdetalheproduto({
+          nome: 'Camiseta blabla',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino2',
+          descricao: 'Camiseta de blabla.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer; color: #000; text-decoration: underline;"
+      >
+        Camiseta blabla
+      </h3>
+        <div class="precos">
+          <span class="preco-antigo">R$ 500</span>
+          <span class="preco-atual">R$ 300</span>
+        </div>
+        <p class="categoria">Cores disponíveis</p>
+        <div class="cores">
+          <span class="cor" style="background:#2f2a2b;"></span>
+          <span class="cor" style="background:#bfc0c1;"></span>
+          <span class="cor" style="background:#1d1f22;"></span>
+          <span class="cor" style="background:#00332e;"></span>
+          <span class="cor" style="background:#6e7c7c;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 (repetição para exemplo) -->
+    <div class="card">
+      <div class="imagem-container">
+        <img src="https://placehold.co/250x350?text=Feminino3" alt="Imagem feminino 2"
+        onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential1',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino3',
+          descricao: 'Camiseta Tech Essential1.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer;"
+        >
+        <div class="overlay-compra">Compra rápida</div>
+      </div>
+      <div class="info-produto">
+        <h3 class="nome-produto" onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential1',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino3',
+          descricao: 'Camiseta Tech Essential1.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer; color: #000; text-decoration: underline;"
+        >
+        Camiseta Tech Essential1
+      </h3>
+        <div class="precos">
+          <span class="preco-antigo">R$ 199</span>
+          <span class="preco-atual">R$ 159</span>
+        </div>
+        <p class="categoria">Cores disponíveis</p>
+        <div class="cores">
+          <span class="cor" style="background:#000;"></span>
+          <span class="cor" style="background:#444;"></span>
+          <span class="cor" style="background:#888;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 (repetição para exemplo) -->
+    <div class="card">
+      <div class="imagem-container">
+        <img src="https://placehold.co/250x350?text=Feminino4" alt="Imagem feminino 4"
+         onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential2',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino4',
+          descricao: 'Camiseta Tech Essential2.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer;"
+        >
+        <div class="overlay-compra">Compra rápida</div>
+      </div>
+      <div class="info-produto">
+        <h3 class="nome-produto" onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential2',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino4',
+          descricao: 'Camiseta Tech Essential2.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer; color: #000; text-decoration: underline;"
+        >
+        Camiseta Tech Essential2
+      </h3>
+        <div class="precos">
+          <span class="preco-antigo">R$ 199</span>
+          <span class="preco-atual">R$ 159</span>
+        </div>
+        <p class="categoria">Cores disponíveis</p>
+        <div class="cores">
+          <span class="cor" style="background:#000;"></span>
+          <span class="cor" style="background:#444;"></span>
+          <span class="cor" style="background:#888;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 (repetição para exemplo) -->
+    <div class="card">
+      <div class="imagem-container">
+        <img src="https://placehold.co/250x350?text=Feminino5" alt="Imagem feminino 5"
+        onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential3',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino5',
+          descricao: 'Camiseta Tech Essential3.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer;"
+        >
+        <div class="overlay-compra">Compra rápida</div>
+      </div>
+      <div class="info-produto">
+        <h3 class="nome-produto" onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential3',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino5',
+          descricao: 'Camiseta Tech Essential3.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer; color: #000; text-decoration: underline;"
+        >
+        Camiseta Tech Essential3
+      </h3>
+        <div class="precos">
+          <span class="preco-antigo">R$ 199</span>
+          <span class="preco-atual">R$ 159</span>
+        </div>
+        <p class="categoria">Cores disponíveis</p>
+        <div class="cores">
+          <span class="cor" style="background:#000;"></span>
+          <span class="cor" style="background:#444;"></span>
+          <span class="cor" style="background:#888;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 (repetição para exemplo) -->
+    <div class="card">
+      <div class="imagem-container">
+        <img src="https://placehold.co/250x350?text=Feminino6" alt="Imagem feminino6"
+        onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential4',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino6',
+          descricao: 'Camiseta Tech Essential4.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer;"
+        >
+        <div class="overlay-compra">Compra rápida</div>
+      </div>
+      <div class="info-produto">
+        <h3 class="nome-produto" onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential4',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino6',
+          descricao: 'Camiseta Tech Essential4.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer; color: #000; text-decoration: underline;">
+        Camiseta Tech Essential4
+      </h3>
+        <div class="precos">
+          <span class="preco-antigo">R$ 199</span>
+          <span class="preco-atual">R$ 159</span>
+        </div>
+        <p class="categoria">Cores disponíveis</p>
+        <div class="cores">
+          <span class="cor" style="background:#000;"></span>
+          <span class="cor" style="background:#444;"></span>
+          <span class="cor" style="background:#888;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7 (repetição para exemplo) -->
+    <div class="card">
+      <div class="imagem-container">
+        <img src="https://placehold.co/250x350?text=Feminino7" alt="Imagem feminino 7"
+        onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential5',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino7',
+          descricao: 'Camiseta de blabla.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer;"
+        >
+        <div class="overlay-compra">Compra rápida</div>
+      </div>
+      <div class="info-produto">
+        <h3 class="nome-produto" onclick="abrirdetalheproduto({
+          nome: 'Camiseta Tech Essential5',
+          preco: 300,
+          imagem: 'https://placehold.co/250x350?text=Feminino7',
+          descricao: 'Camiseta Tech Essential5.',
+          cores: ['#2f2a2b','#bfc0c1','#1d1f22','#00332e','#6e7c7c']
+        })"
+        style="cursor: pointer; color: #000; text-decoration: underline;"
+        >
+        Camiseta Tech Essential5
+      </h3>
+        <div class="precos">
+          <span class="preco-antigo">R$ 199</span>
+          <span class="preco-atual">R$ 159</span>
+        </div>
+        <p class="categoria">Cores disponíveis</p>
+        <div class="cores">
+          <span class="cor" style="background:#000;"></span>
+          <span class="cor" style="background:#444;"></span>
+          <span class="cor" style="background:#888;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Botão Direita -->
+  <button class="carousel-btn next-btn" onclick="moveCarousel(1)">&#10095;</button>
+</div>
+
+    
+    <!-- Carrossel Feminino -->
+    <div class="carousel-container hidden" id="carousel-feminino">
+      <!-- Botão Esquerda -->
+    <button class="carousel-btn prev-btn" onclick="moveCarouselFeminino(-1)">&#10094;</button>
+        <div class="carousel">
+            <div class="card">
+                <img src="https://placehold.co/250x350?text=Masculino1" alt="Imagem Masculino 1">
+                <h3>Feminino 1</h3>
+            </div>
+            <div class="card">
+                <img src="https://placehold.co/250x350?text=Masculino2" alt="Imagem Masculino 2">
+                <h3>Feminino 2</h3>
+            </div>
+            <div class="card">
+                <img src="https://placehold.co/250x350?text=Masculino3" alt="Imagem Masculino 3">
+                <h3>Feminino 3</h3>
+            </div>
+          <div class="card">
+                <img src="https://placehold.co/250x350?text=Masculino4" alt="Imagem Masculino 4">
+                <h3>Feminino 4</h3>
+            </div>
+          <div class="card">
+                <img src="https://placehold.co/250x350?text=Masculino5" alt="Imagem Masculino 5">
+                <h3>Feminino 5</h3>
+            </div>
+        </div>
+      <!-- Botão Direita -->
+        <button class="carousel-btn next-btn" onclick="moveCarouselFeminino(1)">&#10095;</button>
+    </div>
+
+
+    <!-- Modal Carrinho -->
+    <div id="cartModal" class="modal-carrinho hidden">
+        <div class="modal-content">
+            <!-- Cabeçalho -->
+            <div class="modal-header">
+                <h2 class="text-lg font-bold">CARRINHO</h2>
+                <button id="closeModal" class="close-btn">&times;</button>
+            </div>
+
+            <!-- Barra de progresso -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" style="width: 20%;"></div>
+                </div>
+                <p class="progress-text">Faltam R$ 349,00 pra ganhar Frete Grátis</p>
+            </div>
+
+            <!-- Mensagem do carrinho vazio -->
+            <p class="cart-message">O seu carrinho ainda está vazio.<br> Aceita algumas sugestões?</p>
+
+            <!-- Botões de sugestão -->
+            <div class="suggestions">
+                <button class="suggestion-btn">MASCULINO</button>
+                <button class="suggestion-btn">FEMININO</button>
+                <button class="suggestion-btn">KITS</button>
+            </div>
+        </div>
+    </div>
+
+   <script type="module" src="script.js"></script>
+   <script type="module" src="perfil.js"></script>
+   <script type="module" src="API-Cadastrar-Login.js"></script>
+   <script type="module" src="js/API-Verificar.js"></script>
+
+
+   
+</body>
+</html>
+
+<!-- Rodapé -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="social-media">
+             <h4>Nos siga nas redes sociais</h4>
+            <a href="https://facebook.com/seuperfil" traget="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://instagram.com/seuperfil" traget="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https:/wa.me/5511994557696" traget="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        
+        <div class="departments">
+            <h4>Departamentos</h4>
+            <ul>
+                <li><a href="#">Novidades</a></li>
+                <li><a href="#">Feminino</a></li>
+                <li><a href="#">Infantil</a></li>
+                <li><a href="#">Básicos</a></li>
+                <li><a href="#">Jeans</a></li>
+                <li><a href="#">Acessórios</a></li>
+            </ul>
+        </div>
+        
+        <div class="about-us">
+            <h4>Sobre nós</h4>
+            <ul>
+                <li><a href="#">Quem somos</a></li>
+                <li><a href="#">História</a></li>
+                <li><a href="#">Valores</a></li>
+            </ul>
+        </div>
+        
+        <div class="help">
+            <h4>Que ajuda?</h4>
+            <ul>
+                <li><a href="#">Central de ajuda</a></li>
+                <li><a href="#">Central de privacidade</a></li>
+                <li><a href="#">Trocas e devoluções</a></li>
+            </ul>
+        </div>
+        
+        <div class="payment-methods">
+            <h4>Formas de pagamento</h4>
+            <img src="https://placehold.co/150x30" alt="Formas de pagamento">
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="footer-info">
+            <p>CNPJ: 00.000.000/0000-00</p>
+            <p>R. SANTO INACÍO, 00,JARDIM TAMOIO, JUNDIAÍ - SP, CEP: 00000-000 - BRASIL</p>
+        </div>
+        <div class="footer-rights">
+            <p>© 2023. Todos os direitos reservados. EMILYLOJA.</p>
+        </div>
+    </div>
+</footer>
