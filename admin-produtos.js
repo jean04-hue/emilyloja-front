@@ -6,6 +6,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let enviandoFormulario = false;
 
+  function urlValida(texto) {
+    try {
+      new URL(texto);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function imagemSegura(url) {
+    if (!url || !urlValida(url)) {
+      return `<span>Sem imagem</span>`;
+    }
+
+    return `
+      <img 
+        src="${url}" 
+        alt="Produto" 
+        style="width:60px; height:60px; object-fit:cover; border-radius:6px;"
+        onerror="this.outerHTML='<span>Imagem inválida</span>'"
+      >
+    `;
+  }
+
   async function carregarProdutos() {
     if (!tabelaBody) return;
 
@@ -41,10 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .map((produto) => {
           const precoFormatado = Number(produto.preco || 0).toFixed(2);
 
-          const imagemHtml = produto.imagem_url
-            ? `<img src="${produto.imagem_url}" alt="${produto.nome}" style="width:60px; height:60px; object-fit:cover; border-radius:6px;">`
-            : "Sem imagem";
-
           return `
             <tr>
               <td>${produto.nome || ""}</td>
@@ -52,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>R$ ${precoFormatado}</td>
               <td>${produto.estoque ?? 0}</td>
               <td>${produto.categoria || ""}</td>
-              <td>${imagemHtml}</td>
+              <td>${imagemSegura(produto.imagem_url)}</td>
               <td>
                 <button type="button" onclick="deletarProduto('${produto.id}')">Excluir</button>
               </td>
@@ -116,6 +136,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!imagem) {
         alert("❌ Preencha a URL da imagem.");
+        enviandoFormulario = false;
+        return;
+      }
+
+      if (!urlValida(imagem)) {
+        alert("❌ A URL da imagem é inválida.");
         enviandoFormulario = false;
         return;
       }
