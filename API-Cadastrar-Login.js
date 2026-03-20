@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("❌ Erro no cadastro: " + (data.erro || "Tente novamente"));
         }
       } catch (error) {
-        console.error("Erro na requisição de cadastro:", error);
+        console.error("Erro na requisição:", error);
         alert("❌ Falha de conexão com o servidor. Detalhes: " + error.message);
       }
     });
