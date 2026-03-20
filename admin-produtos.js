@@ -72,12 +72,54 @@ document.addEventListener("DOMContentLoaded", () => {
     formCadastro.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const nome = document.getElementById("nome")?.value?.trim();
-      const descricao = document.getElementById("descricao")?.value?.trim();
-      const preco = document.getElementById("preco")?.value;
-      const estoque = document.getElementById("estoque")?.value;
-      const categoria = document.getElementById("categoria")?.value;
-      const imagem = document.getElementById("imagem")?.value?.trim();
+      const nome = document.getElementById("nome")?.value?.trim() || "";
+      const descricao = document.getElementById("descricao")?.value?.trim() || "";
+      const preco = document.getElementById("preco")?.value ?? "";
+      const estoque = document.getElementById("estoque")?.value ?? "";
+      const categoria = document.getElementById("categoria")?.value?.trim() || "";
+      const imagem = document.getElementById("imagem")?.value?.trim() || "";
+
+      if (!nome) {
+        alert("❌ Preencha o nome do produto.");
+        return;
+      }
+
+      if (!descricao) {
+        alert("❌ Preencha a descrição.");
+        return;
+      }
+
+      if (preco === "") {
+        alert("❌ Preencha o preço.");
+        return;
+      }
+
+      if (estoque === "") {
+        alert("❌ Preencha o estoque.");
+        return;
+      }
+
+      if (!categoria) {
+        alert("❌ Selecione uma categoria.");
+        return;
+      }
+
+      if (!imagem) {
+        alert("❌ Preencha a URL da imagem.");
+        return;
+      }
+
+      const payload = {
+        nome,
+        descricao,
+        preco: Number(preco),
+        estoque: Number(estoque),
+        categoria,
+        imagem_url: imagem,
+        ativo: true,
+      };
+
+      console.log("Payload enviado:", payload);
 
       try {
         const response = await fetch(`${API_URL}/api/produtos`, {
@@ -85,15 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            nome,
-            descricao,
-            preco,
-            estoque,
-            categoria,
-            imagem_url: imagem,
-            ativo: true,
-          }),
+          body: JSON.stringify(payload),
         });
 
         const data = await response.json();
