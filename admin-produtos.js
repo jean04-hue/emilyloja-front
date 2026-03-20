@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const formCadastro = document.getElementById("formCadastro");
   const tabelaBody = document.querySelector("#tabelaProdutos tbody");
 
+  let enviandoFormulario = false;
+
   async function carregarProdutos() {
     if (!tabelaBody) return;
 
@@ -26,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      if (!produtos.length) {
+      if (!Array.isArray(produtos) || produtos.length === 0) {
         tabelaBody.innerHTML = `
           <tr>
             <td colspan="7">Nenhum produto cadastrado.</td>
@@ -36,27 +38,27 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       tabelaBody.innerHTML = produtos
-        .map(
-          (produto) => `
+        .map((produto) => {
+          const precoFormatado = Number(produto.preco || 0).toFixed(2);
+
+          const imagemHtml = produto.imagem_url
+            ? `<img src="${produto.imagem_url}" alt="${produto.nome}" style="width:60px; height:60px; object-fit:cover; border-radius:6px;">`
+            : "Sem imagem";
+
+          return `
             <tr>
-              <td>${produto.nome}</td>
+              <td>${produto.nome || ""}</td>
               <td>${produto.descricao || ""}</td>
-              <td>R$ ${Number(produto.preco).toFixed(2)}</td>
-              <td>${produto.estoque}</td>
-              <td>${produto.categoria}</td>
-              <td>
-                ${
-                  produto.imagem_url
-                    ? `<a href="${produto.imagem_url}" target="_blank">Ver imagem</a>`
-                    : "Sem imagem"
-                }
-              </td>
+              <td>R$ ${precoFormatado}</td>
+              <td>${produto.estoque ?? 0}</td>
+              <td>${produto.categoria || ""}</td>
+              <td>${imagemHtml}</td>
               <td>
                 <button type="button" onclick="deletarProduto('${produto.id}')">Excluir</button>
               </td>
             </tr>
-          `
-        )
+          `;
+        })
         .join("");
     } catch (error) {
       console.error("Erro ao carregar produtos:", error);
@@ -72,6 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
     formCadastro.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      if (enviandoFormulario) return;
+      enviandoFormulario = true;
+
       const nome = document.getElementById("nome")?.value?.trim() || "";
       const descricao = document.getElementById("descricao")?.value?.trim() || "";
       const preco = document.getElementById("preco")?.value ?? "";
@@ -81,31 +86,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!nome) {
         alert("❌ Preencha o nome do produto.");
+        enviandoFormulario = false;
         return;
       }
 
       if (!descricao) {
         alert("❌ Preencha a descrição.");
+        enviandoFormulario = false;
         return;
       }
 
       if (preco === "") {
         alert("❌ Preencha o preço.");
+        enviandoFormulario = false;
         return;
       }
 
       if (estoque === "") {
         alert("❌ Preencha o estoque.");
+        enviandoFormulario = false;
         return;
       }
 
       if (!categoria) {
         alert("❌ Selecione uma categoria.");
+        enviandoFormulario = false;
         return;
       }
 
       if (!imagem) {
         alert("❌ Preencha a URL da imagem.");
+        enviandoFormulario = false;
         return;
       }
 
@@ -130,19 +141,29 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify(payload),
         });
 
-        const data = await response.json();
+        let data = {};
+        try {
+          data = await response.json();
+        } catch {
+          data = {};
+        }
 
         if (response.ok) {
           alert("✅ Produto cadastrado com sucesso!");
           formCadastro.reset();
-          carregarProdutos();
-          selecionarAba("ver");
+          await carregarProdutos();
+
+          if (typeof selecionarAba === "function") {
+            selecionarAba("ver");
+          }
         } else {
           alert("❌ Erro: " + (data.erro || "Não foi possível cadastrar."));
         }
       } catch (error) {
         console.error("Erro ao cadastrar produto:", error);
         alert("❌ Erro de conexão com o servidor.");
+      } finally {
+        enviandoFormulario = false;
       }
     });
   }
@@ -156,11 +177,16 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "DELETE",
       });
 
-      const data = await response.json();
+      let data = {};
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (response.ok) {
         alert("✅ Produto excluído com sucesso!");
-        carregarProdutos();
+        await carregarProdutos();
       } else {
         alert("❌ Erro: " + (data.erro || "Não foi possível excluir."));
       }
