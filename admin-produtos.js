@@ -37,23 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tabelaBody.innerHTML = `
       <tr>
-        <td colspan="7">Carregando produtos...</td>
+        <td colspan="8">Carregando produtos...</td>
       </tr>
     `;
 
     try {
-      console.log("Buscando produtos em:", `${API_URL}/api/produtos`);
-
       const response = await fetch(`${API_URL}/api/produtos`);
       const produtos = await response.json();
-
-      console.log("Status listar produtos:", response.status);
-      console.log("Produtos recebidos:", produtos);
 
       if (!response.ok) {
         tabelaBody.innerHTML = `
           <tr>
-            <td colspan="7">Erro ao carregar produtos.</td>
+            <td colspan="8">Erro ao carregar produtos.</td>
           </tr>
         `;
         return;
@@ -62,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!Array.isArray(produtos) || produtos.length === 0) {
         tabelaBody.innerHTML = `
           <tr>
-            <td colspan="7">Nenhum produto cadastrado.</td>
+            <td colspan="8">Nenhum produto cadastrado.</td>
           </tr>
         `;
         return;
@@ -79,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>R$ ${precoFormatado}</td>
               <td>${produto.estoque ?? 0}</td>
               <td>${produto.categoria || ""}</td>
+              <td>${produto.publico || ""}</td>
               <td>${imagemSegura(produto.imagem_url, produto.nome || "Produto")}</td>
               <td>
                 <button type="button" onclick="deletarProduto('${produto.id}')">Excluir</button>
@@ -91,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Erro ao carregar produtos:", error);
       tabelaBody.innerHTML = `
         <tr>
-          <td colspan="7">Erro de conexão ao carregar produtos.</td>
+          <td colspan="8">Erro de conexão ao carregar produtos.</td>
         </tr>
       `;
     }
@@ -109,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const preco = document.getElementById("preco")?.value ?? "";
       const estoque = document.getElementById("estoque")?.value ?? "";
       const categoria = document.getElementById("categoria")?.value?.trim() || "";
+      const publico = document.getElementById("publico")?.value?.trim() || "";
       const imagem = document.getElementById("imagem")?.value?.trim() || "";
 
       if (!nome) {
@@ -141,6 +138,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      if (!publico) {
+        alert("❌ Selecione o público.");
+        enviandoFormulario = false;
+        return;
+      }
+
       if (!imagem) {
         alert("❌ Preencha a URL da imagem.");
         enviandoFormulario = false;
@@ -159,13 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
         preco: Number(preco),
         estoque: Number(estoque),
         categoria,
+        publico,
         imagem_url: imagem,
         ativo: true,
       };
-
-      console.log("API_URL usada:", API_URL);
-      console.log("Enviando para:", `${API_URL}/api/produtos`);
-      console.log("Payload enviado:", payload);
 
       try {
         const response = await fetch(`${API_URL}/api/produtos`, {
@@ -182,9 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch {
           data = {};
         }
-
-        console.log("Status da resposta do cadastro:", response.status);
-        console.log("Resposta do backend:", data);
 
         if (response.ok) {
           alert("✅ Produto cadastrado com sucesso!");
@@ -211,8 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!confirmar) return;
 
     try {
-      console.log("Excluindo produto:", id);
-
       const response = await fetch(`${API_URL}/api/produtos/${id}`, {
         method: "DELETE",
       });
@@ -223,9 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch {
         data = {};
       }
-
-      console.log("Status da exclusão:", response.status);
-      console.log("Resposta da exclusão:", data);
 
       if (response.ok) {
         alert("✅ Produto excluído com sucesso!");
