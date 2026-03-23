@@ -1,3 +1,5 @@
+console.log("ADMIN JS CARREGADO");
+
 import { API_URL } from "./config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -6,24 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let enviandoFormulario = false;
 
-  function urlValida(texto) {
+  function urlHttpValida(texto) {
     try {
-      new URL(texto);
-      return true;
+      const url = new URL(texto);
+      return url.protocol === "http:" || url.protocol === "https:";
     } catch {
       return false;
     }
   }
 
-  function imagemSegura(url) {
-    if (!url || !urlValida(url)) {
+  function imagemSegura(url, nome = "Produto") {
+    if (!url || !urlHttpValida(url)) {
       return `<span>Sem imagem</span>`;
     }
 
     return `
       <img 
         src="${url}" 
-        alt="Produto" 
+        alt="${nome}"
         style="width:60px; height:60px; object-fit:cover; border-radius:6px;"
         onerror="this.outerHTML='<span>Imagem inválida</span>'"
       >
@@ -40,8 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     try {
+      console.log("Buscando produtos em:", `${API_URL}/api/produtos`);
+
       const response = await fetch(`${API_URL}/api/produtos`);
       const produtos = await response.json();
+
+      console.log("Status listar produtos:", response.status);
+      console.log("Produtos recebidos:", produtos);
 
       if (!response.ok) {
         tabelaBody.innerHTML = `
@@ -72,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>R$ ${precoFormatado}</td>
               <td>${produto.estoque ?? 0}</td>
               <td>${produto.categoria || ""}</td>
-              <td>${imagemSegura(produto.imagem_url)}</td>
+              <td>${imagemSegura(produto.imagem_url, produto.nome || "Produto")}</td>
               <td>
                 <button type="button" onclick="deletarProduto('${produto.id}')">Excluir</button>
               </td>
@@ -140,8 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      if (!urlValida(imagem)) {
-        alert("❌ A URL da imagem é inválida.");
+      if (!urlHttpValida(imagem)) {
+        alert("❌ A URL da imagem precisa começar com http:// ou https://");
         enviandoFormulario = false;
         return;
       }
@@ -156,6 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ativo: true,
       };
 
+      console.log("API_URL usada:", API_URL);
+      console.log("Enviando para:", `${API_URL}/api/produtos`);
       console.log("Payload enviado:", payload);
 
       try {
@@ -173,6 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch {
           data = {};
         }
+
+        console.log("Status da resposta do cadastro:", response.status);
+        console.log("Resposta do backend:", data);
 
         if (response.ok) {
           alert("✅ Produto cadastrado com sucesso!");
@@ -199,6 +211,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!confirmar) return;
 
     try {
+      console.log("Excluindo produto:", id);
+
       const response = await fetch(`${API_URL}/api/produtos/${id}`, {
         method: "DELETE",
       });
@@ -209,6 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch {
         data = {};
       }
+
+      console.log("Status da exclusão:", response.status);
+      console.log("Resposta da exclusão:", data);
 
       if (response.ok) {
         alert("✅ Produto excluído com sucesso!");
